@@ -1,0 +1,2027 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api": {},
+        "/api/v1/auth": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign up and get access token",
+                "operationId": "d1a8373f1f4d41a215a19baa38ed7969",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "required": [
+                                            "name",
+                                            "password"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "password": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "name": "John Doe",
+                                            "password": "password"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Token list",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "admin": "bearer_admin",
+                                            "update": "bearer_update",
+                                            "basic": "bearer_basic"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/customers": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get paginated customers with pagination links",
+                "operationId": "031430ef8dab229444cd554eecba6f42",
+                "responses": {
+                    "200": {
+                        "description": "Paginated Customers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "I"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "John@goldner.biz"
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "6182 Vandervort Place"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "Bechtelarton"
+                                                    },
+                                                    "state": {
+                                                        "type": "string",
+                                                        "example": "Arizona"
+                                                    },
+                                                    "postalCode": {
+                                                        "type": "string",
+                                                        "example": "54711"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?page=10"
+                                                },
+                                                "prev": {
+                                                    "type": "null",
+                                                    "example": null
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?page=2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 150
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8000/api/v1/customers?page=1"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Create new customer",
+                "operationId": "ffabf39efc47dc6eb7b504bfbe9318d4",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "required": [
+                                            "name",
+                                            "type",
+                                            "email",
+                                            "address",
+                                            "city",
+                                            "state",
+                                            "postalCode"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "email"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "postalCode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "name": "John Doe",
+                                            "type": "I",
+                                            "email": "John@goldner.biz",
+                                            "address": "6182 Vandervort Place",
+                                            "city": "Bechtelarton",
+                                            "state": "Arizona",
+                                            "postalCode": "54711"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created Customer",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "name": "John Doe",
+                                                "type": "I",
+                                                "email": "John@goldner.biz",
+                                                "address": "6182 Vandervort Place",
+                                                "city": "Bechtelarton",
+                                                "state": "Arizona",
+                                                "postalCode": "54711"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customers/{customerId}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customer by id",
+                "operationId": "637b3dfee0ec662fe4259ba22693be97",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "I"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "John@goldner.biz"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "6182 Vandervort Place"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Bechtelarton"
+                                                },
+                                                "state": {
+                                                    "type": "string",
+                                                    "example": "Arizona"
+                                                },
+                                                "postalCode": {
+                                                    "type": "string",
+                                                    "example": "54711"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Update customer by id (all fields are required to perform an update)",
+                "operationId": "1dfefd1376919236bed23d7dc69b0b7c",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "required": [
+                                            "name",
+                                            "type",
+                                            "email",
+                                            "address",
+                                            "city",
+                                            "state",
+                                            "postalCode"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "email"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "postalCode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "name": "John Doe",
+                                            "type": "I",
+                                            "email": "John@goldner.biz",
+                                            "address": "6182 Vandervort Place",
+                                            "city": "Bechtelarton",
+                                            "state": "Arizona",
+                                            "postalCode": "54711"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Delete customer by id",
+                "operationId": "edc7d5c8e58d61d70336b7c4d2f207b7",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Update customer by id",
+                "operationId": "c834f43936193574f1736d2415930e8e",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "anyOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "email"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "type": "string"
+                                            },
+                                            "postalCode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "name": "John Doe",
+                                            "type": "I",
+                                            "email": "John@goldner.biz",
+                                            "address": "6182 Vandervort Place",
+                                            "city": "Bechtelarton",
+                                            "state": "Arizona",
+                                            "postalCode": "54711"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customers?includeInvoices=true": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customers with invoices",
+                "operationId": "21b3be7173c39d3830035fa35d682733",
+                "parameters": [
+                    {
+                        "name": "includeInvoices",
+                        "in": "query",
+                        "description": "Include Invoices Flag",
+                        "example": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated Customers with invoives",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "I"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "John@goldner.biz"
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "6182 Vandervort Place"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "Bechtelarton"
+                                                    },
+                                                    "state": {
+                                                        "type": "string",
+                                                        "example": "Arizona"
+                                                    },
+                                                    "postalCode": {
+                                                        "type": "string",
+                                                        "example": "54711"
+                                                    },
+                                                    "invoices": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "customerId": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "amount": {
+                                                                    "type": "string",
+                                                                    "example": "13527.5"
+                                                                },
+                                                                "billedDate": {
+                                                                    "type": "string",
+                                                                    "example": "2017-09-14 22:55:56"
+                                                                },
+                                                                "paidDate": {
+                                                                    "type": "string",
+                                                                    "example": "2017-09-14 22:55:56"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "P"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?includeInvoices=true&page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?includeInvoices=true&page=10"
+                                                },
+                                                "prev": {
+                                                    "type": "null",
+                                                    "example": null
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?includeInvoices=true&page=2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 150
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?includeInvoices=true"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8000/api/v1/customers?includeInvoices=true&page=1"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customers?postalCode[gt]=30000&state[eq]=Arizona&includeInvoices=true": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customers with invoices and filters(eq,gt,lt,gte,lte,ne)",
+                "operationId": "3d497c0fc824d1b1a6fc682ad7dd0f3c",
+                "parameters": [
+                    {
+                        "name": "name[eq]",
+                        "in": "query",
+                        "description": "Name",
+                        "example": "John Doe"
+                    },
+                    {
+                        "name": "email[eq]",
+                        "in": "query",
+                        "description": "Email",
+                        "example": "John@goldner.biz"
+                    },
+                    {
+                        "name": "type[eq]",
+                        "in": "query",
+                        "description": "Type (I - individual, B - business)",
+                        "example": "I"
+                    },
+                    {
+                        "name": "state[eq]",
+                        "in": "query",
+                        "description": "State",
+                        "example": "Arizona"
+                    },
+                    {
+                        "name": "city[eq]",
+                        "in": "query",
+                        "description": "City",
+                        "example": "Phenix"
+                    },
+                    {
+                        "name": "address[eq]",
+                        "in": "query",
+                        "description": "Address",
+                        "example": "6182 Vandervort Place"
+                    },
+                    {
+                        "name": "postalCode[gt]",
+                        "in": "query",
+                        "description": "Postal Code",
+                        "example": 30000
+                    },
+                    {
+                        "name": "includeInvoices",
+                        "in": "query",
+                        "description": "Include Invoices Flag",
+                        "example": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Filtred Paginated Customers with invoives",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "I"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "John@goldner.biz"
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "6182 Vandervort Place"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "Bechtelarton"
+                                                    },
+                                                    "state": {
+                                                        "type": "string",
+                                                        "example": "Arizona"
+                                                    },
+                                                    "postalCode": {
+                                                        "type": "string",
+                                                        "example": "54711"
+                                                    },
+                                                    "invoices": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "customerId": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "amount": {
+                                                                    "type": "string",
+                                                                    "example": "13527.5"
+                                                                },
+                                                                "billedDate": {
+                                                                    "type": "string",
+                                                                    "example": "2017-09-14 22:55:56"
+                                                                },
+                                                                "paidDate": {
+                                                                    "type": "string",
+                                                                    "example": "2017-09-14 22:55:56"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "P"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?postalCode[gt]=30000&state[eq]=Arizona&includeInvoices=true&page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?postalCode[gt]=30000&state[eq]=Arizona&includeInvoices=true&page=10"
+                                                },
+                                                "prev": {
+                                                    "type": "null",
+                                                    "example": null
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?postalCode[gt]=30000&state[eq]=Arizona&includeInvoices=true&page=2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 150
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/customers?postalCode[gt]=30000&state[eq]=Arizona&includeInvoices=true"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8000/api/v1/customers?postalCode[gt]=30000&state[eq]=Arizona&includeInvoices=true&page=1"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/invoices": {
+            "get": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Get paginated invoices with pagination links",
+                "operationId": "a9524132b3249b5a71de1cf7067ffb73",
+                "responses": {
+                    "200": {
+                        "description": "Paginated Invoices",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "customerId": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "amount": {
+                                                        "type": "integer",
+                                                        "example": 1235
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "B"
+                                                    },
+                                                    "billed_date": {
+                                                        "type": "dateTime",
+                                                        "example": "2017-09-14 22:55:56"
+                                                    },
+                                                    "paid_date": {
+                                                        "type": "dateTime",
+                                                        "example": null
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?page=10"
+                                                },
+                                                "prev": {
+                                                    "type": "null",
+                                                    "example": null
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?page=2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 150
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8000/api/v1/invoices?page=1"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Create new invoice",
+                "operationId": "a3341b55daaa787bae0446bc1824faa7",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "required": [
+                                            "customerId",
+                                            "amount",
+                                            "billed_date",
+                                            "status"
+                                        ],
+                                        "properties": {
+                                            "customerId": {
+                                                "type": "integer"
+                                            },
+                                            "amount": {
+                                                "type": "integer"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "billed_date": {
+                                                "type": "dateTime"
+                                            },
+                                            "paid_date": {
+                                                "type": "dateTime"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "customerId": 1,
+                                            "amount": 13527,
+                                            "paidDate": null,
+                                            "billedDate": "2017-09-14 22:55:56",
+                                            "status": "B"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created Invoice",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "customerId": 1,
+                                                "amount": 13527,
+                                                "paidDate": null,
+                                                "billedDate": "2017-09-14 22:55:56",
+                                                "status": "B"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/invoices/bulk": {
+            "post": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Create new invoices in bulk mode",
+                "operationId": "e302bbc8a2e0b114012e06c1977c08ff",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "required": [
+                                                "customerId",
+                                                "amount",
+                                                "billed_date",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "customerId": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "amount": {
+                                                    "type": "integer",
+                                                    "example": 1235
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "B"
+                                                },
+                                                "billedDate": {
+                                                    "type": "dateTime",
+                                                    "example": "2017-09-14 22:55:56"
+                                                },
+                                                "paidDate": {
+                                                    "type": "dateTime",
+                                                    "example": null
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "required": [
+                                                "customerId",
+                                                "amount",
+                                                "billed_date",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "customerId": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "amount": {
+                                                    "type": "integer",
+                                                    "example": 4567
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "P"
+                                                },
+                                                "billedDate": {
+                                                    "type": "dateTime",
+                                                    "example": "2017-09-14 22:55:56"
+                                                },
+                                                "paidDate": {
+                                                    "type": "dateTime",
+                                                    "example": "2017-09-14 22:55:56"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/invoices/{invoiceId}": {
+            "get": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Get invoice by id",
+                "operationId": "94306df72bb3b96fb64190b5fba5576d",
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "description": "Invoice Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Invoice",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "customerId": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "amount": {
+                                                    "type": "integer",
+                                                    "example": 1235
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "B"
+                                                },
+                                                "billed_date": {
+                                                    "type": "dateTime",
+                                                    "example": "2017-09-14 22:55:56"
+                                                },
+                                                "paid_date": {
+                                                    "type": "dateTime",
+                                                    "example": null
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Update invoice by id (all fields are required to perform an update)",
+                "operationId": "80654fa87b2f96c063090e6f7df27b03",
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "description": "Invoice Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "required": [
+                                            "customerId",
+                                            "amount",
+                                            "billed_date",
+                                            "status"
+                                        ],
+                                        "properties": {
+                                            "customerId": {
+                                                "type": "integer"
+                                            },
+                                            "amount": {
+                                                "type": "integer"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "billed_date": {
+                                                "type": "dateTime"
+                                            },
+                                            "paid_date": {
+                                                "type": "dateTime"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "customerId": 1,
+                                            "amount": 13527,
+                                            "paidDate": null,
+                                            "billedDate": "2017-09-14 22:55:56",
+                                            "status": "B"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Delete customer by id",
+                "operationId": "e295447ab9168106f475d18c42a95163",
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "description": "Invoice Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Update invoice by id",
+                "operationId": "5e13532f1e0412173087f2a85e00c724",
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "description": "Invoice Id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "anyOf": [
+                                    {
+                                        "properties": {
+                                            "customerId": {
+                                                "type": "integer"
+                                            },
+                                            "amount": {
+                                                "type": "integer"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "billed_date": {
+                                                "type": "dateTime"
+                                            },
+                                            "paid_date": {
+                                                "type": "dateTime"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "example": {
+                                            "customerId": 1,
+                                            "amount": 13527,
+                                            "paidDate": null,
+                                            "billedDate": "2017-09-14 22:55:56",
+                                            "status": "B"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/invoices?status[eq]=P&paidDate[ne]=null": {
+            "get": {
+                "tags": [
+                    "Invoices"
+                ],
+                "summary": "Get invoices with filters(eq,gt,lt,gte,lte,ne)",
+                "operationId": "e01537432b07366a8171d8d0764a44f4",
+                "parameters": [
+                    {
+                        "name": "customerId[eq]",
+                        "in": "query",
+                        "description": "customerId",
+                        "example": "1"
+                    },
+                    {
+                        "name": "amount[gt]",
+                        "in": "query",
+                        "description": "amount",
+                        "example": 1000
+                    },
+                    {
+                        "name": "status[eq]",
+                        "in": "query",
+                        "description": "Status (B - billed, P - Paid, V - void)",
+                        "example": "P"
+                    },
+                    {
+                        "name": "billedDate[eq]",
+                        "in": "query",
+                        "description": "Billed Date",
+                        "example": "2017-09-14"
+                    },
+                    {
+                        "name": "paidDate[eq]",
+                        "in": "query",
+                        "description": "Paid Date",
+                        "example": "2017-09-14"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Filtred Paginated Invoices",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "customerId": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "amount": {
+                                                        "type": "integer",
+                                                        "example": 1235
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "B"
+                                                    },
+                                                    "billed_date": {
+                                                        "type": "dateTime",
+                                                        "example": "2017-09-14 22:55:56"
+                                                    },
+                                                    "paid_date": {
+                                                        "type": "dateTime",
+                                                        "example": null
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?status[eq]=P&paidDate[ne]=null&page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?status[eq]=P&paidDate[ne]=null&page=10"
+                                                },
+                                                "prev": {
+                                                    "type": "null",
+                                                    "example": null
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?status[eq]=P&paidDate[ne]=null&page=2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 150
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/api/v1/invoices?status[eq]=P&paidDate[ne]=null"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8000/api/v1/invoices?status[eq]=P&paidDate[ne]=null&page=1"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Unauthenticated."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "apiKey",
+                "description": "Enter token starting from Bearer e.g. `Bearer 12345678`",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
