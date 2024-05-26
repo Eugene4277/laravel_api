@@ -8,7 +8,7 @@ Simple example of an Api built with Laravel and Sanctum auth
     - **Admin** (allows to `get`, `create`, `update` and `delete` data)
     - **Update** (allows to `get`, `create` and `update` data)
     - **Basic** (allows to `get` data)
-4. Pass `Swagger` authorization by providing token
+4. Pass `Swagger` authorization by providing token (e.g. Bearer <token>)
 5. Use any of available endpoints
 
 ### Data description and data manipulation
