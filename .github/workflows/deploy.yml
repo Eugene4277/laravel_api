@@ -33,7 +33,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install php php-mbstring php-xml
 
       - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-req=php
 
       - name: Deploy to EC2
         run: |
