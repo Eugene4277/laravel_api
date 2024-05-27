@@ -1,0 +1,59 @@
+name: deploy-api-github
+run-name: deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install rsync
+        run: sudo apt-get install rsync -y
+
+      - name: Install ssh-keyscan
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssh-client
+
+      - name: Add know hosts
+        run: |
+          mkdir -p ~/.ssh/
+          touch ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/known_hosts
+          ssh-keyscan -v -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
+
+      - name: Install PHP and dependencies
+        run: sudo apt-get update && sudo apt-get install php php-mbstring php-xml
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Deploy to EC2
+        run: |
+          rsync -avz --delete --exclude '.git*' --exclude 'storage/*' --exclude 'bootstrap/cache/*' --exclude 'vendor/' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }}:/var/www/html/laravel-deploy-project
+
+      - name: SSH into Server and Execute Post-Deployment Commands
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/laravel-deploy-project && mkdir -p storage/{app,framework,logs} && cd storage && mkdir -p framework/{sessions,views,cache}'
+
+      - name: SSH into Server and Execute Composer Install and copy of env file
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/laravel-deploy-project && cp .env.example .env && composer install'
+
+      - name: SSH into Server create data cache folder
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/laravel-deploy-project/storage/framework/cache && mkdir -p data'
+
+      - name: SSH into Server and run commands
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/laravel-deploy-project && php artisan config:cache && php artisan cache:clear && php artisan key:generate && php artisan optimize'
+
+      - name: Clear SSH key
+        run: rm ~/.ssh/id_rsa
