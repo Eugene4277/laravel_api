@@ -2,7 +2,7 @@
 Simple example of an Api built with Laravel and Sanctum auth
 
 ### How to start?
-1. To start using the Api go to `https://<link>/api/documentation`
+1. To start using the Api go to `http://ec2-3-129-64-127.us-east-2.compute.amazonaws.com/api/documentation`
 2. Go to **`Auth`** section and create a user, provide `name` and `password`
 3. You'll get 3 types of access token:
     - **Admin** (allows to `get`, `create`, `update` and `delete` data)
