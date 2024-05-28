@@ -58,5 +58,9 @@ jobs:
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/deploy-api-github/storage/framework/cache && mkdir -p data'
 
+      - name: SSH into Server and run commands
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/deploy-api-github && php artisan key:generate && php artisan optimize && php artisan migrate'
+
       - name: Clear SSH key
         run: rm ~/.ssh/id_rsa
