@@ -16,7 +16,7 @@ Simple example of an Api built with Laravel and Sanctum auth
     - **Customer** with next filelds:
         * 'id'
         * 'name'
-        * 'type' ('I' - individual, 'B' - business )
+        * 'type' ('I' - individual, 'B' - business)
         * 'email'
         * 'address'
         * 'city'
